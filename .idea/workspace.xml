@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bfe6c9c3-6048-4e7e-877c-ceed13c70096" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="ProjectId" id="1WzT8D0YYzKiYAP9OU3T49Mefij" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests" />
+      <recent name="$PROJECT_DIR$/controllers" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TestGetJobs in JobPortalBackend/tests" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="JobPortalBackend" />
+      <working_directory value="$PROJECT_DIR$/tests" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="JobPortalBackend/tests" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestGetJobs$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestGetJobs in JobPortalBackend/tests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2000" y="205" key="#Go_Modules_(vgo)" timestamp="1580373985579">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2000" y="205" key="#Go_Modules_(vgo)/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580373985579" />
+    <state x="1540" y="100" width="1720" height="880" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1580841682187">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1540" y="100" width="1720" height="880" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1440.900/1440.23.1920.1057@1440.23.1920.1057" timestamp="1580841682187" />
+    <state width="1870" height="362" key="GridCell.Tab.0.bottom" timestamp="1580851251890">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251890" />
+    <state width="1870" height="362" key="GridCell.Tab.0.center" timestamp="1580851251888">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.0.center/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251888" />
+    <state width="1870" height="362" key="GridCell.Tab.0.left" timestamp="1580851251887">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.0.left/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251887" />
+    <state width="1870" height="362" key="GridCell.Tab.0.right" timestamp="1580851251889">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.0.right/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251889" />
+    <state width="1870" height="362" key="GridCell.Tab.1.bottom" timestamp="1580851251893">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.1.bottom/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251893" />
+    <state width="1870" height="362" key="GridCell.Tab.1.center" timestamp="1580851251891">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.1.center/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251891" />
+    <state width="1870" height="362" key="GridCell.Tab.1.left" timestamp="1580851251891">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.1.left/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251891" />
+    <state width="1870" height="362" key="GridCell.Tab.1.right" timestamp="1580851251892">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1870" height="362" key="GridCell.Tab.1.right/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580851251892" />
+    <state x="1440" y="0" width="1920" height="1080" key="SettingsEditor" timestamp="1580849338074">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1440" y="0" width="1920" height="1080" key="SettingsEditor/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580849338074" />
+    <state width="960" height="540" key="XDebugger.FullValuePopup" timestamp="1580849494849">
+      <screen x="1440" y="0" width="1920" height="1080" />
+    </state>
+    <state width="960" height="540" key="XDebugger.FullValuePopup/0.0.1440.900/1440.0.1920.1080@1440.0.1920.1080" timestamp="1580849494849" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1580809343582">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1580809343582" />
+  </component>
+</project>
