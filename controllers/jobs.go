@@ -11,69 +11,59 @@ package controllers
 
 import (
 	"JobPortalBackend/helpers"
+	"JobPortalBackend/models"
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
-	"math/rand"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
-	"strconv"
 )
 
-type Job struct {
-	Id string `json:"id"`
-	Company string `json:"company"`
-	Criteria string `json:"criteria"`
-	Location string `json:"location"`
-	Description string `json:"description"`
-	Salary string `json:"salary"`
-}
-
-var jobs []Job
-
 func CreateJob(res http.ResponseWriter, req *http.Request){
-	var job Job
+	var job models.Job
 
-	err := json.NewDecoder(req.Body).Decode(&job)
+	if err := json.NewDecoder(req.Body).Decode(&job); err != nil {
+		helpers.ErrorResponse(res, http.StatusInternalServerError, err.Error())
+		return
+	}
 
 	if req.ContentLength == 0 {
 		helpers.ErrorResponse(res, http.StatusBadRequest, "empty json body")
 		return
 	}
 
-	// Error handling
-	if err != nil {
-		fmt.Println(err)
-		helpers.ErrorResponse(res, 500, "failed to create job")
+	if message, isError := helpers.ValidateUserInput(res, job); !isError {
+		helpers.ErrorResponse(res, http.StatusBadRequest, message)
 		return
 	}
 
-	helpers.ValidateUserInput(res, job)
+	result, err := job.CreateJobCollection()
 
-	job.Id = strconv.Itoa(rand.Intn(12000000))
+	if err != nil {
+		helpers.ErrorResponse(res, http.StatusBadRequest, "failed to create job")
+		return
+	}
 
-	jobs = append(jobs, job)
-
+	job.ID = result.(primitive.ObjectID)
 	var payload = make(map[string]interface{})
 	payload["message"] = "successfully created job"
 	payload["job"] = job
 
-	helpers.JSONResponse(res, 201, payload)
-	return
+	helpers.JSONResponse(res, http.StatusCreated, payload)
 }
 
 func GetJobs(res http.ResponseWriter, req *http.Request){
-	var payload = make(map[string]interface{})
-	jobs = append(jobs, Job{ Id: "3244444", Company: "Andela", Criteria: "Full-time", Location: "Uganda",
-		Description: "JEFF", Salary: "12,444" })
+	jobs, err := models.GetJobs()
 
-	if len(jobs) < 1{
-		helpers.ErrorResponse(res, 404, "no jobs found")
+	if err != nil {
+		helpers.ErrorResponse(res, http.StatusBadRequest, "failed to get jobs")
 		return
 	}
+
+	var payload = make(map[string]interface{})
 	payload["message"] = "successfully fetched jobs"
 	payload["jobs"] = jobs
 
-	helpers.JSONResponse(res, 200, payload)
+	helpers.JSONResponse(res, http.StatusOK, payload)
 }
 
 func GetJob(res http.ResponseWriter, req *http.Request){
@@ -81,60 +71,63 @@ func GetJob(res http.ResponseWriter, req *http.Request){
 
 	params := mux.Vars(req)
 	id := params["id"]
-	fmt.Println(jobs[:1])
-	for _, job := range jobs{
-		if job.Id == id {
-			payload["message"] = "successfully fetched job"
-			payload["job"] = job
-			helpers.JSONResponse(res, 200, payload)
+
+	result, err := models.GetJob(id)
+	if err != nil {
+		if err == "no job found"{
+			helpers.ErrorResponse(res, http.StatusNotFound, "no job found")
 			return
 		}
+		helpers.ErrorResponse(res, http.StatusInternalServerError, "failed to fetch job")
+		return
 	}
 
-	helpers.ErrorResponse(res, 404, "no job found")
+	payload["message"] = "successfully fetched job"
+	payload["job"] = result
+
+	helpers.JSONResponse(res, http.StatusOK, payload)
 }
 
 func UpdateJob(res http.ResponseWriter, req *http.Request){
-	var payload = make(map[string]interface{})
-	var jobAdd Job
+	var job models.Job
 
-	err := json.NewDecoder(req.Body).Decode(&jobAdd)
+	err := json.NewDecoder(req.Body).Decode(&job)
+
+	if err != nil {
+		helpers.ErrorResponse(res, http.StatusInternalServerError, "failed to update job")
+		return
+	}
 
 	if req.ContentLength == 0 {
 		helpers.ErrorResponse(res, http.StatusBadRequest, "empty json body")
 		return
 	}
 
-	// Error handling
-	if err != nil {
-		fmt.Println(err)
-		helpers.ErrorResponse(res, 500, "failed to update job")
-		return
-	}
-
 	params := mux.Vars(req)
 	id := params["id"]
 
-
-
-	for index, job := range jobs{
-		if job.Id == id {
-			jobAdd.Id = jobs[index].Id
-			jobs[index].Company = jobAdd.Company
-			jobs[index].Criteria = jobAdd.Criteria
-			jobs[index].Description = jobAdd.Description
-			jobs[index].Location = jobAdd.Location
-			jobs[index].Salary = jobAdd.Salary
-
-			payload["message"] = "successfully updated job"
-			payload["job"] = jobAdd
-
-			helpers.JSONResponse(res, 200, payload)
+	result, errr := job.UpdateJobCollection(id)
+	if errr != nil {
+		if errr == "no job found to update"{
+			helpers.ErrorResponse(res, http.StatusNotFound, "no job found to update")
 			return
 		}
+		helpers.ErrorResponse(res, http.StatusInternalServerError, "failed to update job")
+		return
 	}
 
-	helpers.ErrorResponse(res, 404, "no job found")
+	var payload = make(map[string]interface{})
+	payload["message"] = "successfully updated job"
+	payload["job"] = map[string]string{
+		"_id": id,
+		"company": result.Company,
+		"criteria": result.Criteria,
+		"location": result.Location,
+		"description": result.Description,
+		"salary": result.Salary,
+	}
+
+	helpers.JSONResponse(res, http.StatusOK, payload)
 }
 
 func DeleteJob(res http.ResponseWriter, req *http.Request){
@@ -143,16 +136,18 @@ func DeleteJob(res http.ResponseWriter, req *http.Request){
 	params := mux.Vars(req)
 	id := params["id"]
 
-	for index, job := range jobs{
-		if job.Id == id {
-			jobs = append(jobs[:index], jobs[index+1:]...)
-			payload["message"] = "successfully deleted job"
-
-			helpers.JSONResponse(res, 204, payload)
+	result, err := models.DeleteJob(id)
+	if err != nil {
+		if err == "no job found"{
+			helpers.ErrorResponse(res, http.StatusNotFound, "no job found to delete")
 			return
 		}
+		helpers.ErrorResponse(res, http.StatusInternalServerError, "failed to delete job")
+		return
 	}
 
-	helpers.ErrorResponse(res, 404, "no job found")
-}
+	payload["message"] = "successfully deleted job"
+	payload["job"] = result
 
+	helpers.JSONResponse(res, http.StatusOK, payload)
+}
