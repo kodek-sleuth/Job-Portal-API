@@ -2,18 +2,8 @@ package models
 
 import (
 	"context"
-	//"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-
-	//"go.mongodb.org/mongo-driver/mongo"
-
-	//"reflect"
-
-	//"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
-	//"reflect"
-
-	//"net/http"
 )
 
 // Bson.D - D reps a bson doc containing ordered elements
