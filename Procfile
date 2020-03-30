@@ -1,1 +1,1 @@
-web: bin/job-seek-backend
+web: bin/JobPortalBackend
