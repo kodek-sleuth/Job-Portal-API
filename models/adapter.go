@@ -1,31 +1,49 @@
 package models
 
 import (
-	"context"
-	//"fmt"
-	//"go.mongodb.org/mongo-driver/bson"
-	//"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	_"gopkg.in/mgo.v2/bson"
-	"log"
+	"fmt"
+	"github.com/jinzhu/gorm"
+	_"github.com/lib/pq"
+	"github.com/satori/go.uuid"
+	"time"
+
+	//"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
-func MongoConnection(database string, coll string) *mongo.Collection {
-	//// We need this because incoming requests to a server should create a context and outgoing calls to servers
-	//// should accept a Context
+// Base contains common columns for all tables.
+type Base struct {
+	ID        uuid.UUID `gorm:"type:uuid;primary_key;"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time `sql:"index"`
+}
 
-	// set client options but why -
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "postgres"
+	password = "kevina52"
+	dbname   = "testing"
+)
 
-	// connect to mongodb
-	client, err := mongo.Connect(context.TODO(), clientOptions)
+func (base *Base) BeforeCreate(scope *gorm.Scope) error {
+	uuid, err := uuid.NewV4()
+	if err != nil {
+		return err
+	}
+	return scope.SetColumn("ID", uuid)
+}
 
-	if err != nil{
-		log.Fatal(err)
+func SQLConnection() (*gorm.DB, interface{}) {
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+	db, err := gorm.Open("postgres", psqlInfo)
+	if err != nil {
+		return db, err
 	}
 
-	collection := client.Database(database).Collection(coll)
-
-	return collection
+	// Migrate the schema
+	db.AutoMigrate(&Job{}, &Users{})
+	return db, nil
 }

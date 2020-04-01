@@ -1,12 +1,11 @@
 package helpers
 
 import (
-	_"fmt"
+	_ "fmt"
 	"github.com/fatih/structs"
-	"net/http"
 )
 
-func ValidateUserInput(res http.ResponseWriter, payload interface{})(string, bool){
+func ValidateJobInput(payload interface{})(string, bool){
 	// Convert struct to map
 	newJob := structs.Map(payload)
 	company, criteria, salary, description, location := newJob["Company"].(string), newJob["Criteria"].(string),
@@ -18,3 +17,17 @@ func ValidateUserInput(res http.ResponseWriter, payload interface{})(string, boo
 
 	return "", true
 }
+
+func ValidateUserInput(payload interface{})(string, bool) {
+	// Convert struct to map
+	newUser := structs.Map(payload)
+	name, email, password := newUser["Name"].(string), newUser["Email"].(string),
+		newUser["Password"].(string)
+
+	if len(name) < 1 || len(email) < 1 || len(password) < 1 {
+		return "Name, email and password", false
+	}
+
+	return "", true
+}
+

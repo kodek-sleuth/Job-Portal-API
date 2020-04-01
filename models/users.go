@@ -2,36 +2,24 @@ package models
 
 import (
 	_"github.com/jinzhu/gorm"
-
 )
 
-//import (
-//	"context"
-//	"go.mongodb.org/mongo-driver/bson/primitive"
-//	"gopkg.in/mgo.v2/bson"
-//)
-//
-//// Bson.D - D reps a bson doc containing ordered elements
-//// Bson.M - M reps a bson doc containing unordered elements
-//
-type Job struct {
+type Users struct {
 	Base
-	Company string `json:"company"`
-	Criteria string `json:"criteria"`
-	Location string `json:"location"`
-	Description string `json:"description"`
-	Salary string `json:"salary"`
+	Name string `json:"company"`
+	Email string `json:"criteria"`
+	Password string `json:"location"`
 }
 //
 
 
-func (j *Job) CreateJobCollection()(*Job, interface{}) {
+func (u *Users) CreateUsersCollection()(*Users, interface{}) {
 	db, err := SQLConnection()
 	if err != nil{
-		return j, err
+		return u, err
 	}
-	db.Create(j)
-	return j, nil
+	db.Create(u)
+	return u, nil
 }
 
 //func GetJobs() ([]Job, interface{}) {
