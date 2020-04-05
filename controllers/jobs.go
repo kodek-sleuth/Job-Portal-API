@@ -8,25 +8,6 @@ import (
 	"net/http"
 )
 
-//
-//// Task return json data.
-//// Receive and read json data
-//// Finesse error handling.
-//// json.Marshal accepts an interface(type/struct) and returns the data(encoded) and error.
-//// json.Decode accepts two parameters, the JSON object to decode and where its result will be stored(pointer).
-//// create job creation function and fix error handling.
-//// create job struct
-//// create jobs array.
-//
-//import (
-//	"JobPortalBackend/helpers"
-//	"JobPortalBackend/models"
-//	"encoding/json"
-//	"github.com/gorilla/mux"
-//	"go.mongodb.org/mongo-driver/bson/primitive"
-//	"net/http"
-//)
-//
 func CreateJob(res http.ResponseWriter, req *http.Request){
 	var job models.Job
 

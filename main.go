@@ -4,6 +4,8 @@ import (
 	"JobPortalBackend/controllers"
 	"github.com/gorilla/mux"
 	"JobPortalBackend/models"
+	"JobPortalBackend/helpers"
+	"github.com/codegangsta/negroni"
 	"log"
 	"net/http"
 	"os"
@@ -20,14 +22,22 @@ const (
 func main(){
 	router := mux.NewRouter()
 	models.SQLConnection()
-
-	router.HandleFunc("/api/jobs", controllers.CreateJob).Methods("POST")
+	router.Handle("/api/jobs",
+		negroni.New(
+			negroni.HandlerFunc(helpers.IsAuthorized),
+			negroni.HandlerFunc(controllers.CreateJob),
+		)).Methods("POST")
 	//router.HandleFunc("/api/jobs", controllers.GetJobs).Methods("GET")
 	//router.HandleFunc("/api/jobs/{id}", controllers.GetJob).Methods("GET")
 	//router.HandleFunc("/api/jobs/{id}", controllers.UpdateJob).Methods("PUT")
 	//router.HandleFunc("/api/jobs/{id}", controllers.DeleteJob).Methods("DELETE")
 
-	router.HandleFunc("/api/jobs", controllers.CreateUsers).Methods("POST")
+	router.HandleFunc("/api/users/signup", controllers.CreateUsers).Methods("POST")
+	router.HandleFunc("/api/users/login", controllers.LoginUsers).Methods("POST")
 	port := os.Getenv("PORT")
 	log.Fatal(http.ListenAndServe(":"+port, router))
+	//
+	//n := negroni.Classic()
+	//n.UseHandler(router)
+	//http.ListenAndServe(":5000", n)
 }
